@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Get the latest bitcoin price from Luno in your menu bar",
   "dependencies": {
+    "axios": "^0.17.1",
+    "luno-api": "^1.1.0",
     "menubar": "*"
   },
   "devDependencies": {
