@@ -2,13 +2,40 @@
     <head>
         <title>Crypto Menu Bar</title>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <style>
+          .loader {
+            max-width: 25px;
+            float: right;
+          }    
+        </style>
     </head>
     <body>
-      <div>
-        Bitcoin price: <label id='bitcoin-price'></label>
-      </div>
-      <div>
-        Ethereum price: <label id='eth-price'></label>
+      <br>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="list-group">
+              <div class='list-group-item active'>Crypto Price Exchanges</div>
+              <div class="list-group-item list-group-item-action">
+                DOLLAR/RAND: 
+                <img src="loader.gif" id="rand-loader" class="loader"/>
+                <span class="badge badge-primary" id='sa-rand'></span>
+              </div>
+              <div class="list-group-item list-group-item-action">
+                BTC:
+                <img src="loader.gif" id="btc-loader" class="loader"/>
+                <span class="badge badge-primary" id='bitcoin-price'></span>
+              </div>
+              <div class="list-group-item list-group-item-action">
+                ETH:
+                <img src="loader.gif" id="eth-loader" class="loader"/>
+                <span class="badge badge-primary" id='eth-price'></span>
+                <span class="badge badge-primary" id='eth-rand-price'></span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <script src="./data.js"></script>
     </body>

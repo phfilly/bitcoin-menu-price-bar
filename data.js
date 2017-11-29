@@ -1,18 +1,44 @@
 var axios = require('axios')
+var RAND = 0
 
-axios.get('https://api.mybitx.com/api/1/ticker?pair=XBTZAR')
-.then(function (response) {
-  document.querySelector('#bitcoin-price').innerHTML = response.data.bid
-})
-.catch(function (error) {
-  console.log(error);
-});
+setInterval(btc(), 3000)
+setInterval(rand(), 3000)
+setInterval(eth(), 3000);
 
+function btc() {
+  document.querySelector('#btc-loader').style.visibility = 'visible';
+  axios.get('https://api.mybitx.com/api/1/ticker?pair=XBTZAR')
+  .then(function (response) {
+    document.querySelector('#btc-loader').style.visibility = 'hidden';
+    document.querySelector('#bitcoin-price').innerHTML = `R ${parseFloat(response.data.bid)}`
+  })
+  .catch(function (error) {
+    document.querySelector('#eth-price').innerHTML = 'Failed'
+  });
+}
 
-axios.get('https://api.coinmarketcap.com/v1/ticker/')
-.then(function (response) {
-  document.querySelector('#eth-price').innerHTML = response.data[1].price_usd
-})
-.catch(function (error) {
-  console.log(error);
-});
+function rand() {
+  document.querySelector('#rand-loader').style.visibility = 'visible';
+  axios.get('http://www.apilayer.net/api/live?access_key=0dc480a338e23d13ae6beec364931599&format=1')
+  .then(function (response) {
+    document.querySelector('#rand-loader').style.visibility = 'hidden';
+    RAND = parseFloat(response.data.quotes.USDZAR)
+    document.querySelector('#sa-rand').innerHTML = `R ${parseFloat(response.data.quotes.USDZAR)}`
+  })
+  .catch(function (error) {
+    document.querySelector('#sa-rand').innerHTML = 'Failed'
+  });
+}
+
+function eth() {
+  document.querySelector('#eth-loader').style.visibility = 'hidden'
+  axios.get('https://api.coinmarketcap.com/v1/ticker/')
+  .then(function (response) {
+    document.querySelector('#eth-loader').style.visibility = 'hidden'
+    document.querySelector('#eth-rand-price').innerHTML = `R ${ parseFloat(RAND * parseFloat(response.data[1].price_usd), 2) }`
+    document.querySelector('#eth-price').innerHTML = `$ ${parseFloat(response.data[1].price_usd)}`
+  })
+  .catch(function (error) {
+    document.querySelector('#eth-price').innerHTML = 'Failed'
+  });
+}

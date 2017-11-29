@@ -4,6 +4,7 @@
   "description": "Get the latest bitcoin price from Luno in your menu bar",
   "dependencies": {
     "axios": "^0.17.1",
+    "bootstrap": "^3.3.7",
     "luno-api": "^1.1.0",
     "menubar": "*"
   },
