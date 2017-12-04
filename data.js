@@ -1,15 +1,15 @@
 var axios = require('axios')
 var RAND = 0
+var COINAPI = '0dc480a338e23d13ae6beec364931599'
 
 setInterval(btc(), 3000)
 setInterval(rand(), 3000)
-setInterval(eth(), 3000);
 
 function btc() {
-  document.querySelector('#btc-loader').style.visibility = 'visible';
+  document.querySelector('#btc-loader').style.visibility = 'visible'
   axios.get('https://api.mybitx.com/api/1/ticker?pair=XBTZAR')
   .then(function (response) {
-    document.querySelector('#btc-loader').style.visibility = 'hidden';
+    document.querySelector('#btc-loader').style.visibility = 'hidden'
     document.querySelector('#bitcoin-price').innerHTML = `R ${parseFloat(response.data.bid)}`
   })
   .catch(function (error) {
@@ -18,12 +18,13 @@ function btc() {
 }
 
 function rand() {
-  document.querySelector('#rand-loader').style.visibility = 'visible';
-  axios.get('http://www.apilayer.net/api/live?access_key=0dc480a338e23d13ae6beec364931599&format=1')
+  document.querySelector('#rand-loader').style.visibility = 'visible'
+  axios.get(`http://www.apilayer.net/api/live?access_key=${COINAPI}&format=1`)
   .then(function (response) {
-    document.querySelector('#rand-loader').style.visibility = 'hidden';
+    document.querySelector('#rand-loader').style.visibility = 'hidden'
     RAND = parseFloat(response.data.quotes.USDZAR)
     document.querySelector('#sa-rand').innerHTML = `R ${parseFloat(response.data.quotes.USDZAR)}`
+    eth()
   })
   .catch(function (error) {
     document.querySelector('#sa-rand').innerHTML = 'Failed'
