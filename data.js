@@ -1,9 +1,15 @@
 var axios = require('axios')
+var moment = require('moment')
+var chart = require('chart.js')
 var RAND = 0
+var LINEDATA = []
+var data = []
+var labels = []
 var COINAPI = '0dc480a338e23d13ae6beec364931599'
 
-setInterval(btc(), 3000)
-setInterval(rand(), 3000)
+setInterval("btc()", 5000)
+setInterval("rand()", 5000)
+linegraph()
 
 function btc() {
   document.querySelector('#btc-loader').style.visibility = 'visible'
@@ -43,3 +49,30 @@ function eth() {
     document.querySelector('#eth-price').innerHTML = 'Failed'
   });
 }
+
+function linegraph() {
+  axios.get(`https://api.coindesk.com/v1/bpi/historical/close.json?start=${moment(new Date()).subtract(1, 'month').format('YYYY-MM-DD')}&end=${moment(new Date()).format('YYYY-MM-DD')}`)
+  .then(function (response) {
+    LINEDATA = response.data.bpi;
+    var ctx = document.getElementById("chart");
+    data = Object.keys(LINEDATA).map(key => LINEDATA[key]);
+    labels = Object.keys(LINEDATA);
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Bitcoin',
+            data: data,
+            borderColor: "#3e95cd",
+          }
+        ]
+      }
+    });
+  })
+  .catch(function (error) {
+
+  })
+}
+
